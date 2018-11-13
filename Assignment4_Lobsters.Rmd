@@ -1,0 +1,31 @@
+---
+title: "Assignment4_Lobsters"
+author: "Robert Saldivar"
+date: "November 13, 2018"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+#1. Loading Packages and csv files
+
+library(tidyverse)
+library(RColorBrewer)
+library(ggpubr)
+library(knitr)
+library(effsize)
+library(pwr)
+library(extrafont)
+library(plotly)
+library(ggrepel)
+library(kableExtra)
+library(onewaytests)
+library(car)
+
+read_csv("lobster_size_abundance.csv")
+read_csv("lobster_traps.csv")
+```
+
