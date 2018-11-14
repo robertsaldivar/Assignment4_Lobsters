@@ -25,7 +25,7 @@ library(kableExtra)
 library(onewaytests)
 library(car)
 
-read_csv("lobster_size_abundance.csv")
-read_csv("lobster_traps.csv")
+lobster_size <- read_csv("lobster_size_abundance.csv")
+lobster_traps <- read_csv("lobster_traps.csv")
 ```
 
