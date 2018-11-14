@@ -36,6 +36,10 @@ lobster_size_edits <- lobster_size %>%
   filter(SIZE !=-99999) %>%
   select(YEAR, MONTH, DATE, SITE, SIZE, COUNT) # Edit Lobster Size data to remove -99999 data from size column and remove transect information
 
+lobster_traps_edits <- lobster_traps %>%
+  filter(SITE=="AQUE" |SITE =="NAPL" |SITE=="MOHK" |SITE=="IVEE" |SITE=="CARP") %>%
+  select(YEAR, MONTH, DATE, SITE, TRAPS)
+
 ```
 
 ```{r}
@@ -53,5 +57,16 @@ lobster_size_qq <- ggplot(lobster_size_edits, aes(sample=SIZE)) +
 
 lobster_size_qq
 
+lobster_traps_hist <- ggplot(lobster_traps_edits, aes(x=TRAPS)) +
+  geom_histogram() +
+  facet_wrap(~SITE)
+
+lobster_traps_hist
+
+lobster_traps_qq <- ggplot(lobster_traps_edits, aes(sample=TRAPS)) +
+  geom_qq() +
+  facet_wrap(~SITE)
+
+lobster_traps_qq
 ```
 
