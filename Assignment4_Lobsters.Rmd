@@ -135,16 +135,102 @@ lobster_size_col
 ```
 
 ```{r}
-# 8 Running test to see if there is a difference between site in 2012 and 2017
-lobster_MPA_2012_17 <- lobster_size_edits %>%
-  filter(YEAR=="2012" |YEAR=="2017", SITE=="NAPL"| SITE=="IVEE") %>%
+# 8 Creating dataframes for lobster size at each site in 2012 and 2017
+lobster_NAPL_2012_17 <- lobster_size_edits %>%
+  filter(YEAR=="2012" |YEAR=="2017", SITE=="NAPL") %>%
   as.data.frame() %>%
   expand.dft(freq="COUNT")
 
-lobster_nonMPA_2012_17 <- lobster_size_edits %>%
-  filter(YEAR=="2012" |YEAR=="2017", SITE=="AQUE"| SITE=="MOHK" |SITE=="CARP") %>%
+lobster_NAPL_2012 <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="NAPL") %>%
   as.data.frame() %>%
   expand.dft(freq="COUNT")
+
+lobster_NAPL_2017 <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="NAPL") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_IVEE_2012_17 <- lobster_size_edits %>%
+  filter(YEAR=="2012" |YEAR=="2017", SITE=="IVEE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_IVEE_2012 <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="IVEE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_IVEE_2017 <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="IVEE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_AQUE_2012_17 <- lobster_size_edits %>%
+  filter(YEAR=="2012" |YEAR=="2017", SITE=="AQUE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_AQUE_2012 <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="AQUE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_AQUE_2017 <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="AQUE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_MOHK_2012_17 <- lobster_size_edits %>%
+  filter(YEAR=="2012" |YEAR=="2017", SITE=="MOHK") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_MOHK_2012 <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="MOHK") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_MOHK_2017 <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="MOHK") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_CARP_2012_17 <- lobster_size_edits %>%
+  filter(YEAR=="2012" |YEAR=="2017", SITE=="CARP") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_CARP_2012 <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="CARP") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_CARP_2017 <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="CARP") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+```
+
+```{r}
+#Running tests to see if there is a difference in size at each site between 2012 and 2017
+
+NAPL_ftest <- var.test(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE)
+NAPL_ftest
+
+IVEE_ftest <- var.test(lobster_IVEE_2012$SIZE, lobster_IVEE_2017$SIZE)
+IVEE_ftest
+
+AQUE_ftest <- var.test(lobster_AQUE_2012$SIZE, lobster_AQUE_2017$SIZE)
+AQUE_ftest
+
+MOHK_ftest <- var.test(lobster_MOHK_2012$SIZE, lobster_MOHK_2017$SIZE)
+MOHK_ftest
+
+CARP_ftest <- var.test(lobster_CARP_2012$SIZE, lobster_CARP_2017$SIZE)
+CARP_ftest
+
+
 
 ```
 
