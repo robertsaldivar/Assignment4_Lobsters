@@ -33,7 +33,7 @@ lobster_size <- read_csv("lobster_size_abundance.csv")
 lobster_traps <- read_csv("lobster_traps.csv")
 ```
 
-```{r}
+```{r, include=FALSE}
 #2 Initial Data Editing
 lobster_size_edits <- lobster_size %>%
   filter(SIZE !=-99999) %>%
@@ -46,7 +46,7 @@ lobster_traps_edits <- lobster_traps %>%
 
 ```
 
-```{r}
+```{r, include=FALSE}
 #3 checking data for normality
 
 lobster_size_hist <- ggplot(lobster_size_edits, aes(x=SIZE)) +
@@ -74,7 +74,7 @@ lobster_traps_qq <- ggplot(lobster_traps_edits, aes(sample=TRAPS)) +
 lobster_traps_qq
 ```
 
-```{r}
+```{r, echo=FALSE, message=FALSE}
 #4 create graphs of abundance and fishing pressure from 2012-2017
 
 abundance_col <- ggplot(lobster_size_edits, aes(x=YEAR, y=COUNT)) +
@@ -90,7 +90,7 @@ fishing_pressure_col <- ggplot(lobster_traps_edits, aes(x=YEAR, y=TRAPS)) +
 fishing_pressure_col
 ```
 
-```{r}
+```{r, include=FALSE}
 #5 put lobster size data into case format.
 
 lobster_case_format <- lobster_size_edits %>%
@@ -112,7 +112,7 @@ lobster_tukeys <- TukeyHSD(lobster_aov)
 lobster_tukeys
 ```
 
-```{r}
+```{r, echo=FALSE}
 #7 Creating Graph and table from anova data
 
 lobster_aov_table <- xtable(lobster_aov)
@@ -131,6 +131,20 @@ lobster_size_col <- ggplot(lobster_size_summary, aes(x=SITE, y=lobster_mean)) +
   geom_errorbar(aes(ymax=lobster_mean+lobster_sd, ymin=lobster_mean-lobster_sd))
 
 lobster_size_col
+
+```
+
+```{r}
+# 8 Running test to see if there is a difference between site in 2012 and 2017
+lobster_MPA_2012_17 <- lobster_size_edits %>%
+  filter(YEAR=="2012" |YEAR=="2017", SITE=="NAPL"| SITE=="IVEE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_nonMPA_2012_17 <- lobster_size_edits %>%
+  filter(YEAR=="2012" |YEAR=="2017", SITE=="AQUE"| SITE=="MOHK" |SITE=="CARP") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
 
 ```
 
