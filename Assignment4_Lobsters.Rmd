@@ -88,11 +88,20 @@ fishing_pressure_col
 ```
 
 ```{r}
-#put lobster size data into case format.
+#5 put lobster size data into case format.
 
 lobster_case_format <- lobster_size_edits %>%
-  filter(YEAR=="2012" |YEAR=="2017") %>%
+  filter(YEAR=="2017") %>%
   as.data.frame() %>%
   expand.dft(freq="COUNT")
+```
+
+```{r}
+#6 run significance tests for lobster size
+lobster_aov <- aov(SIZE~SITE, data=lobster_case_format)
+summary(lobster_aov)
+
+lobster_tukeys <- TukeyHSD(lobster_aov)
+lobster_tukeys
 ```
 
