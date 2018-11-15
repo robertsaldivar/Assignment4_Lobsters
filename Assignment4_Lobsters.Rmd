@@ -213,7 +213,7 @@ lobster_CARP_2017 <- lobster_size_edits %>%
 ```
 
 ```{r}
-#Running tests to see if there is a difference in size at each site between 2012 and 2017
+#Running f and t tests to see if there is a difference in size at each site between 2012 and 2017
 
 NAPL_ftest <- var.test(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE)
 NAPL_ftest
@@ -230,7 +230,20 @@ MOHK_ftest
 CARP_ftest <- var.test(lobster_CARP_2012$SIZE, lobster_CARP_2017$SIZE)
 CARP_ftest
 
+NAPL_ttest <- t.test(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE, var.equal=TRUE)
+NAPL_ttest
 
+IVEE_ttest <- t.test(lobster_IVEE_2012$SIZE, lobster_IVEE_2017$SIZE, var.equal=TRUE)
+IVEE_ttest
+
+AQUE_ttest <- t.test(lobster_AQUE_2012$SIZE, lobster_AQUE_2017$SIZE, var.equal=TRUE)
+AQUE_ttest
+
+MOHK_ttest <- t.test(lobster_MOHK_2012$SIZE, lobster_MOHK_2017$SIZE, var.equal=TRUE)
+MOHK_ttest
+
+CARP_ttest <- t.test(lobster_CARP_2012$SIZE, lobster_CARP_2017$SIZE, var.equal=TRUE)
+CARP_ttest
 
 ```
 
