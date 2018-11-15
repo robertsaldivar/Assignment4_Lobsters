@@ -25,6 +25,9 @@ library(kableExtra)
 library(onewaytests)
 library(car)
 library(vcdExtra) #for getting the data into case format
+library(xtable)
+library(FSA)
+library(ggsignif) #to add significance brackets
 
 lobster_size <- read_csv("lobster_size_abundance.csv")
 lobster_traps <- read_csv("lobster_traps.csv")
@@ -107,5 +110,27 @@ summary(lobster_aov)
 
 lobster_tukeys <- TukeyHSD(lobster_aov)
 lobster_tukeys
+```
+
+```{r}
+#7 Creating Graph and table from anova data
+
+lobster_aov_table <- xtable(lobster_aov)
+print(lobster_aov_table)
+
+lobster_size_summary <- lobster_case_format %>%
+  group_by(SITE) %>%
+  summarize(
+    lobster_mean = round(mean(SIZE),2),
+    lobster_sd = round(sd(SIZE),2),
+    sample_size = length(SIZE)
+  )
+
+lobster_size_col <- ggplot(lobster_size_summary, aes(x=SITE, y=lobster_mean)) +
+  geom_col() +
+  geom_errorbar(aes(ymax=lobster_mean+lobster_sd, ymin=lobster_mean-lobster_sd))
+
+lobster_size_col
+
 ```
 
