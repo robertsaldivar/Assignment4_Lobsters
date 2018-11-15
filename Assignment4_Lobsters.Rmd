@@ -70,3 +70,17 @@ lobster_traps_qq <- ggplot(lobster_traps_edits, aes(sample=TRAPS)) +
 lobster_traps_qq
 ```
 
+```{r}
+abundance_col <- ggplot(lobster_size_edits, aes(x=YEAR, y=COUNT)) +
+  geom_col() +
+  facet_wrap(~SITE)
+
+abundance_col
+
+fishing_pressure_col <- ggplot(lobster_traps_edits, aes(x=YEAR, y=TRAPS)) +
+  geom_col() +
+  facet_wrap(~SITE)
+
+fishing_pressure_col
+```
+
