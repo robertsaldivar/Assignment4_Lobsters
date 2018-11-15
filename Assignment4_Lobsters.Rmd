@@ -34,11 +34,12 @@ lobster_traps <- read_csv("lobster_traps.csv")
 #2 Initial Data Editing
 lobster_size_edits <- lobster_size %>%
   filter(SIZE !=-99999) %>%
-  select(YEAR, MONTH, DATE, SITE, SIZE, COUNT) # Edit Lobster Size data to remove -99999 data from size column and remove transect information
+  select(YEAR, SITE, SIZE, COUNT) # Edit Lobster Size data to remove -99999 data from size column and remove transect information
+  
 
 lobster_traps_edits <- lobster_traps %>%
   filter(SITE=="AQUE" |SITE =="NAPL" |SITE=="MOHK" |SITE=="IVEE" |SITE=="CARP") %>%
-  select(YEAR, MONTH, DATE, SITE, TRAPS)
+  select(YEAR, SITE, TRAPS)
 
 ```
 
@@ -71,6 +72,8 @@ lobster_traps_qq
 ```
 
 ```{r}
+#4 create graphs of abundance and fishing pressure from 2012-2017
+
 abundance_col <- ggplot(lobster_size_edits, aes(x=YEAR, y=COUNT)) +
   geom_col() +
   facet_wrap(~SITE)
@@ -82,5 +85,14 @@ fishing_pressure_col <- ggplot(lobster_traps_edits, aes(x=YEAR, y=TRAPS)) +
   facet_wrap(~SITE)
 
 fishing_pressure_col
+```
+
+```{r}
+#put lobster size data into case format.
+
+lobster_case_format <- lobster_size_edits %>%
+  filter(YEAR=="2012" |YEAR=="2017") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
 ```
 
