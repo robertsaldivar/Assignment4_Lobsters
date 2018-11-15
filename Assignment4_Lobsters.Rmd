@@ -98,6 +98,10 @@ lobster_case_format <- lobster_size_edits %>%
 
 ```{r}
 #6 run significance tests for lobster size
+lobster_levene <- leveneTest(SIZE~SITE, data=lobster_case_format)
+lobster_levene
+#Variences are not equal check to see if another need to do another test beside anova
+
 lobster_aov <- aov(SIZE~SITE, data=lobster_case_format)
 summary(lobster_aov)
 
