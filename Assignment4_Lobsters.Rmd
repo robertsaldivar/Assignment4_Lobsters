@@ -46,7 +46,7 @@ lobster_traps_edits <- lobster_traps %>%
 
 ```
 
-```{r, include=FALSE}
+```{r}
 #3 checking data for normality
 
 lobster_size_hist <- ggplot(lobster_size_edits, aes(x=SIZE)) +
@@ -127,8 +127,11 @@ lobster_size_summary <- lobster_case_format %>%
   )
 
 lobster_size_col <- ggplot(lobster_size_summary, aes(x=SITE, y=lobster_mean)) +
-  geom_col() +
-  geom_errorbar(aes(ymax=lobster_mean+lobster_sd, ymin=lobster_mean-lobster_sd))
+  geom_col(fill="red2", color="red") +
+  geom_errorbar(aes(ymax=lobster_mean+lobster_sd, ymin=lobster_mean-lobster_sd), width=0.2) +
+  theme_classic() +
+  labs(x="Site", y="Mean Lobster Size (mm)") +
+  ggtitle("Lobster Size per Site")
 
 lobster_size_col
 
@@ -213,7 +216,7 @@ lobster_CARP_2017 <- lobster_size_edits %>%
 ```
 
 ```{r}
-#Running f and t tests to see if there is a difference in size at each site between 2012 and 2017
+#9 Running f and t tests to see if there is a difference in size at each site between 2012 and 2017
 
 NAPL_ftest <- var.test(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE)
 NAPL_ftest
@@ -259,6 +262,12 @@ MOHK_eff
 
 CARP_eff <- cohen.d(lobster_CARP_2012$SIZE, lobster_CARP_2017$SIZE)
 CARP_eff
+
+```
+
+```{r}
+#10 Working creating lobster proporations
+
 
 ```
 
