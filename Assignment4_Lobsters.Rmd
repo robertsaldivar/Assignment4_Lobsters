@@ -222,6 +222,7 @@ lobster_CARP_2017 <- lobster_size_edits %>%
 ```{r}
 #9 Running f and t tests to see if there is a difference in size at each site between 2012 and 2017
 
+#Running F test for each of the sites
 NAPL_ftest <- var.test(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE)
 NAPL_ftest
 
@@ -237,6 +238,7 @@ MOHK_ftest
 CARP_ftest <- var.test(lobster_CARP_2012$SIZE, lobster_CARP_2017$SIZE)
 CARP_ftest
 
+#Running t test for each of the sites
 NAPL_ttest <- t.test(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE, var.equal=TRUE)
 NAPL_ttest
 
@@ -254,6 +256,8 @@ CARP_ttest
 
 #there is a significant difference at the MOHK site, all the other sites are not significantly different
 
+
+#Running cohen's d for effect size for each of the sites
 NAPL_eff <- cohen.d(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE)
 NAPL_eff
 
@@ -272,9 +276,31 @@ CARP_eff
 ```
 
 ```{r}
-#10 Working creating lobster proporations
+#10 Create a data frame showing if lobsters are above the legal format or not
 
 #Make table of lobsters above the legal size with yes for above and no for not above
 
+lobster_legal <- lobster_case_format %>%
+  mutate(legal = ifelse(SIZE > 86.2, "YES", "NO")) %>%
+  count(SITE, legal) %>%
+  spread(legal, n) %>%
+  select(-SITE)
+#Yes means the lobster is of legal size, no means the lobster is not legal size
+
+rownames(lobster_legal) <- c("AQUE", "CARP", "IVEE", "MOHK", "NAPL")
+  
+  
+```
+
+```{r}
+#11 Get Propoprtions for each of the sites
+
+lobster_legal_prop <- round(prop.table(as.matrix(lobster_legal), 1), 3)
+#creates prop table show the proportion of legal lobsters at each site
+
+lobster_x2 <- chisq.test(lobster_legal)
+lobster_x2 #Running a chi square test
+
+#there is a significant difference between the site in terms of legal lobster size
 ```
 
