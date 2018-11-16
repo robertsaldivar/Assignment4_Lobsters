@@ -79,13 +79,17 @@ lobster_traps_qq
 
 abundance_col <- ggplot(lobster_size_edits, aes(x=YEAR, y=COUNT)) +
   geom_col() +
-  facet_wrap(~SITE)
+  facet_wrap(~SITE) +
+  theme_classic() +
+  ggtitle("Lobster Abundance")
 
 abundance_col
 
 fishing_pressure_col <- ggplot(lobster_traps_edits, aes(x=YEAR, y=TRAPS)) +
   geom_col() +
-  facet_wrap(~SITE)
+  facet_wrap(~SITE) +
+  theme_classic() +
+  ggtitle("Fishing Pressure")
 
 fishing_pressure_col
 ```
@@ -248,6 +252,8 @@ MOHK_ttest
 CARP_ttest <- t.test(lobster_CARP_2012$SIZE, lobster_CARP_2017$SIZE, var.equal=TRUE)
 CARP_ttest
 
+#there is a significant difference at the MOHK site, all the other sites are not significantly different
+
 NAPL_eff <- cohen.d(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE)
 NAPL_eff
 
@@ -268,6 +274,7 @@ CARP_eff
 ```{r}
 #10 Working creating lobster proporations
 
+#Make table of lobsters above the legal size with yes for above and no for not above
 
 ```
 
