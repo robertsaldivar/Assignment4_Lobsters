@@ -245,5 +245,20 @@ MOHK_ttest
 CARP_ttest <- t.test(lobster_CARP_2012$SIZE, lobster_CARP_2017$SIZE, var.equal=TRUE)
 CARP_ttest
 
+NAPL_eff <- cohen.d(lobster_NAPL_2012$SIZE, lobster_NAPL_2017$SIZE)
+NAPL_eff
+
+IVEE_eff <- cohen.d(lobster_IVEE_2012$SIZE, lobster_IVEE_2017$SIZE)
+IVEE_eff
+
+AQUE_eff <- cohen.d(lobster_AQUE_2012$SIZE, lobster_AQUE_2017$SIZE)
+AQUE_eff
+
+MOHK_eff <- cohen.d(lobster_MOHK_2012$SIZE, lobster_MOHK_2017$SIZE)
+MOHK_eff
+
+CARP_eff <- cohen.d(lobster_CARP_2012$SIZE, lobster_CARP_2017$SIZE)
+CARP_eff
+
 ```
 
