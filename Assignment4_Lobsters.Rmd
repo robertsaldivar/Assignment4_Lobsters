@@ -46,7 +46,7 @@ lobster_traps_edits <- lobster_traps %>%
 
 ```
 
-```{r}
+```{r, include=FALSE}
 #3 checking data for normality
 
 lobster_size_hist <- ggplot(lobster_size_edits, aes(x=SIZE)) +
@@ -78,18 +78,20 @@ lobster_traps_qq
 #4 create graphs of abundance and fishing pressure from 2012-2017
 
 abundance_col <- ggplot(lobster_size_edits, aes(x=YEAR, y=COUNT)) +
-  geom_col() +
+  geom_col(aes(fill=SITE), show.legend=FALSE) +
   facet_wrap(~SITE) +
   theme_classic() +
-  ggtitle("Lobster Abundance")
+  ggtitle("Lobster Abundance") +
+  labs(x="Year", y="count")
 
 abundance_col
 
 fishing_pressure_col <- ggplot(lobster_traps_edits, aes(x=YEAR, y=TRAPS)) +
-  geom_col() +
+  geom_col(aes(fill=SITE), show.legend=FALSE) +
   facet_wrap(~SITE) +
   theme_classic() +
-  ggtitle("Fishing Pressure")
+  ggtitle("Fishing Pressure") +
+  labs(x="Year", y="Number of Traps")
 
 fishing_pressure_col
 ```
@@ -103,7 +105,7 @@ lobster_case_format <- lobster_size_edits %>%
   expand.dft(freq="COUNT")
 ```
 
-```{r}
+```{r, echo=FALSE}
 #6 run significance tests for lobster size
 lobster_levene <- leveneTest(SIZE~SITE, data=lobster_case_format)
 lobster_levene
@@ -116,7 +118,7 @@ lobster_tukeys <- TukeyHSD(lobster_aov)
 lobster_tukeys
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 #7 Creating Graph and table from anova data
 
 lobster_aov_table <- xtable(lobster_aov)
@@ -135,13 +137,17 @@ lobster_size_col <- ggplot(lobster_size_summary, aes(x=SITE, y=lobster_mean)) +
   geom_errorbar(aes(ymax=lobster_mean+lobster_sd, ymin=lobster_mean-lobster_sd), width=0.2) +
   theme_classic() +
   labs(x="Site", y="Mean Lobster Size (mm)") +
-  ggtitle("Lobster Size per Site")
+  ggtitle("Lobster Size per Site") +
+  geom_signif(y_position = c(98.0, 93.0), xmin = c(2,3), xmax = c(5,5), annotation = c("p = 0.023","p = 0.004"), tip_length = 0.1, size = 0.5, textsize = 3)
+
 
 lobster_size_col
 
 ```
 
-```{r}
+
+
+```{r, include=FALSE}
 # 8 Creating dataframes for lobster size at each site in 2012 and 2017
 lobster_NAPL_2012_17 <- lobster_size_edits %>%
   filter(YEAR=="2012" |YEAR=="2017", SITE=="NAPL") %>%
@@ -219,7 +225,7 @@ lobster_CARP_2017 <- lobster_size_edits %>%
   expand.dft(freq="COUNT")
 ```
 
-```{r}
+```{r, echo=FALSE}
 #9 Running f and t tests to see if there is a difference in size at each site between 2012 and 2017
 
 #Running F test for each of the sites
@@ -275,7 +281,7 @@ CARP_eff
 
 ```
 
-```{r}
+```{r, include=FALSE}
 #10 Create a data frame showing if lobsters are above the legal format or not
 
 #Make table of lobsters above the legal size with yes for above and no for not above
@@ -292,7 +298,7 @@ rownames(lobster_legal) <- c("AQUE", "CARP", "IVEE", "MOHK", "NAPL")
   
 ```
 
-```{r}
+```{r, echo=FALSE}
 #11 Get Propoprtions for each of the sites
 
 lobster_legal_prop <- round(prop.table(as.matrix(lobster_legal), 1), 3)
