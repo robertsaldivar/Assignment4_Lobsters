@@ -105,7 +105,7 @@ lobster_case_format2017 <- lobster_size_edits %>%
   expand.dft(freq="COUNT")
 ```
 
-```{r}
+```{r, echo=FALSE}
 #Create Datea table for 2012 and 2017
 lobster_case_format2012 <- lobster_size_edits %>%
   filter(YEAR=="2012") %>%
@@ -120,7 +120,7 @@ lobster_size_summary2012 <- lobster_case_format2012 %>%
     sample_size = length(SIZE)
   )
 
-Table2012 <- kable(lobster_size_summary2012)
+Table2012 <- kable(lobster_size_summary2012, col.names= c("Site", "Mean Lobster Size (mm)", "Standard Deviation of Size (mm)", "Abundance"))
 Table2012
 
 ```
@@ -150,7 +150,7 @@ lobster_size_summary2017 <- lobster_case_format2017 %>%
     sample_size = length(SIZE)
   )
 
-Table2017 <- kable(lobster_size_summary2017) 
+Table2017 <- kable(lobster_size_summary2017, col.names= c("Site", "Mean Lobster Size (mm)", "Standard Deviation of Size (mm)", "Abundance")) 
 Table2017
 
 lobster_size_col <- ggplot(lobster_size_summary2017, aes(x=SITE, y=lobster_mean)) +
