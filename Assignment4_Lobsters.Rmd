@@ -302,6 +302,84 @@ CARP_eff
 
 ```
 
+```{r, echo=FALSE}
+#Significance Tests between MPA and nonMPA
+lobster_MPA_2012 <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="NAPL" |SITE=="IVEE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_MPA_2017 <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="NAPL" |SITE=="IVEE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_MPA_2012count <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="NAPL" |SITE=="IVEE")
+
+lobster_MPA_2017count <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="NAPL" |SITE=="IVEE")
+
+lobster_nonMPA_2012 <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="MOHK" |SITE=="CARP" |SITE=="AQUE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_nonMPA_2017 <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="MOHK" |SITE=="CARP" |SITE=="AQUE") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_nonMPA_2012count <- lobster_size_edits %>%
+  filter(YEAR=="2012", SITE=="MOHK" |SITE=="CARP" |SITE=="AQUE")
+
+lobster_nonMPA_2017count <- lobster_size_edits %>%
+  filter(YEAR=="2017", SITE=="MOHK" |SITE=="CARP" |SITE=="AQUE")
+
+MPAvnonMPA2012_ftest <- var.test(lobster_MPA_2012$SIZE, lobster_nonMPA_2012$SIZE)
+MPAvnonMPA2012_ftest
+
+MPAvnonMPA2017_ftest <- var.test(lobster_MPA_2017$SIZE, lobster_nonMPA_2017$SIZE)
+MPAvnonMPA2017_ftest
+#Variences are not significantly different between nonmpa and mpa in 2012 but they are in 2017 for size
+
+MPAvnonMPA2012count_ftest <- var.test(lobster_MPA_2012count$COUNT, lobster_nonMPA_2012count$COUNT)
+MPAvnonMPA2012count_ftest
+
+MPAvnonMPA2017count_ftest <- var.test(lobster_MPA_2017count$COUNT, lobster_nonMPA_2017count$COUNT)
+MPAvnonMPA2017count_ftest
+#Variences are significantly different in both 2012 and 2017 in terms of count
+
+MPAvnonMPA2012_ttest <- t.test(lobster_MPA_2012$SIZE, lobster_nonMPA_2012$SIZE, var.equal=TRUE)
+MPAvnonMPA2012_ttest
+
+MPAvnonMPA2017_ttest <- t.test(lobster_MPA_2017$SIZE, lobster_nonMPA_2017$SIZE)
+MPAvnonMPA2017_ttest
+#There is a significant difference in mean size between mpa and nonmpa site in 2012, there is not a significant difference in 2017
+
+MPAvnonMPA2012count_ttest <- t.test(lobster_MPA_2012count$COUNT, lobster_nonMPA_2012count$COUNT)
+MPAvnonMPA2012count_ttest
+
+MPAvnonMPA2017count_ttest <- t.test(lobster_MPA_2017count$COUNT, lobster_nonMPA_2017count$COUNT)
+MPAvnonMPA2017count_ttest
+
+#In terms of count there is a significant difference between mpa and nonmpa size in both 2012 and 2017
+
+MPAvnonMPA2012_eff <- cohen.d(lobster_MPA_2012$SIZE, lobster_nonMPA_2012$SIZE)
+MPAvnonMPA2012_eff
+
+MPAvnonMPA2017_eff <- cohen.d(lobster_MPA_2017$SIZE, lobster_nonMPA_2017$SIZE)
+MPAvnonMPA2017_eff
+
+MPAvnonMPA2012count_eff <- cohen.d(lobster_MPA_2012count$COUNT, lobster_nonMPA_2012count$COUNT)
+MPAvnonMPA2012count_eff
+
+MPAvnonMPA2017count_eff <- cohen.d(lobster_MPA_2017count$COUNT, lobster_nonMPA_2017count$COUNT)
+MPAvnonMPA2017count_eff
+
+```
+
+
 ```{r, include=FALSE}
 #10 Create a data frame showing if lobsters are above the legal format or not
 
