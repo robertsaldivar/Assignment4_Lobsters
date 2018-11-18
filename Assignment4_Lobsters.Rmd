@@ -1,6 +1,6 @@
 ---
 title: "Assignment4_Lobsters"
-author: "Robert Saldivar"
+authors: "Robert Saldivar"
 date: "November 13, 2018"
 output: word_document
 ---
