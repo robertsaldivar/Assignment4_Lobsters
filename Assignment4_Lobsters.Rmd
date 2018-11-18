@@ -386,7 +386,7 @@ MPAvnonMPA2017count_eff
 #Make table of lobsters above the legal size with yes for above and no for not above
 
 lobster_legal <- lobster_case_format2017 %>%
-  mutate(legal = ifelse(SIZE > 86.2, "YES", "NO")) %>%
+  mutate(legal = ifelse(SIZE > 86.2, "Legal", "Not Legal")) %>%
   count(SITE, legal) %>%
   spread(legal, n) %>%
   select(-SITE)
@@ -402,6 +402,9 @@ rownames(lobster_legal) <- c("AQUE", "CARP", "IVEE", "MOHK", "NAPL")
 
 lobster_legal_prop <- round(prop.table(as.matrix(lobster_legal), 1), 3)
 #creates prop table show the proportion of legal lobsters at each site
+
+prop_table <-kable(lobster_legal_prop)
+prop_table
 
 lobster_x2 <- chisq.test(lobster_legal)
 lobster_x2 #Running a chi square test
