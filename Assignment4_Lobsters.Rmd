@@ -99,19 +99,39 @@ fishing_pressure_col
 ```{r, include=FALSE}
 #5 put lobster size data into case format.
 
-lobster_case_format <- lobster_size_edits %>%
+lobster_case_format2017 <- lobster_size_edits %>%
   filter(YEAR=="2017") %>%
   as.data.frame() %>%
   expand.dft(freq="COUNT")
 ```
 
+```{r}
+#Create Datea table for 2012 and 2017
+lobster_case_format2012 <- lobster_size_edits %>%
+  filter(YEAR=="2012") %>%
+  as.data.frame() %>%
+  expand.dft(freq="COUNT")
+
+lobster_size_summary2012 <- lobster_case_format2012 %>%
+  group_by(SITE) %>%
+  summarize(
+    lobster_mean = round(mean(SIZE),2),
+    lobster_sd = round(sd(SIZE),2),
+    sample_size = length(SIZE)
+  )
+
+Table2012 <- kable(lobster_size_summary2012)
+Table2012
+
+```
+
 ```{r, echo=FALSE}
 #6 run significance tests for lobster size
-lobster_levene <- leveneTest(SIZE~SITE, data=lobster_case_format)
+lobster_levene <- leveneTest(SIZE~SITE, data=lobster_case_format2017)
 lobster_levene
 #Variences are not equal check to see if another need to do another test beside anova
 
-lobster_aov <- aov(SIZE~SITE, data=lobster_case_format)
+lobster_aov <- aov(SIZE~SITE, data=lobster_case_format2017)
 summary(lobster_aov)
 
 lobster_tukeys <- TukeyHSD(lobster_aov)
@@ -121,10 +141,8 @@ lobster_tukeys
 ```{r, echo=FALSE, message=FALSE}
 #7 Creating Graph and table from anova data
 
-lobster_aov_table <- xtable(lobster_aov)
-print(lobster_aov_table)
 
-lobster_size_summary <- lobster_case_format %>%
+lobster_size_summary2017 <- lobster_case_format2017 %>%
   group_by(SITE) %>%
   summarize(
     lobster_mean = round(mean(SIZE),2),
@@ -132,12 +150,15 @@ lobster_size_summary <- lobster_case_format %>%
     sample_size = length(SIZE)
   )
 
-lobster_size_col <- ggplot(lobster_size_summary, aes(x=SITE, y=lobster_mean)) +
-  geom_col(fill="red2", color="red") +
+Table2017 <- kable(lobster_size_summary2017) 
+Table2017
+
+lobster_size_col <- ggplot(lobster_size_summary2017, aes(x=SITE, y=lobster_mean)) +
+  geom_col(aes(fill=SITE), show.legend=FALSE) +
   geom_errorbar(aes(ymax=lobster_mean+lobster_sd, ymin=lobster_mean-lobster_sd), width=0.2) +
   theme_classic() +
   labs(x="Site", y="Mean Lobster Size (mm)") +
-  ggtitle("Lobster Size per Site") +
+  ggtitle("Lobster Size per Site (2017)") +
   geom_signif(y_position = c(98.0, 93.0), xmin = c(2,3), xmax = c(5,5), annotation = c("p = 0.023","p = 0.004"), tip_length = 0.1, size = 0.5, textsize = 3)
 
 
@@ -286,7 +307,7 @@ CARP_eff
 
 #Make table of lobsters above the legal size with yes for above and no for not above
 
-lobster_legal <- lobster_case_format %>%
+lobster_legal <- lobster_case_format2017 %>%
   mutate(legal = ifelse(SIZE > 86.2, "YES", "NO")) %>%
   count(SITE, legal) %>%
   spread(legal, n) %>%
